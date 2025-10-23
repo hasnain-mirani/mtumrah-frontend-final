@@ -1,11 +1,11 @@
 // src/lib/http.ts
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 /** ---------- Config ---------- **/
 const API_BASE =
   import.meta.env.VITE_API_URL ||
   (typeof window !== "undefined"
-    ? `${window.location.protocol}//${window.location.hostname}:7000`
+    ? `${window.location.protocol}//${window.location.hostname}`
     : "http://localhost:7000");
 
 const isDev = import.meta.env.DEV === true;
@@ -70,7 +70,7 @@ export const http = axios.create({
 });
 
 /** ---------- Request Interceptor ---------- **/
-http.interceptors.request.use((config: AxiosRequestConfig) => {
+http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   // Always send Authorization when present
   const token = getToken();
   if (token) {
